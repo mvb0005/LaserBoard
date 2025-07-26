@@ -64,7 +64,25 @@ impl From<hidapi::HidError> for DurgodError {
                 DurgodError::CommunicationError("Unknown HID API error".to_string())
             }
             hidapi::HidError::FromWideCharError { wide_char } => {
-                DurgodError::CommunicationError(format!("String conversion error: {}", wide_char))
+                DurgodError::CommunicationError(format!("String conversion error: {:?}", wide_char))
+            }
+            hidapi::HidError::InitializationError => {
+                DurgodError::HidInitError("HID API initialization failed".to_string())
+            }
+            hidapi::HidError::InvalidZeroSizeData => {
+                DurgodError::CommunicationError("Invalid zero-size data".to_string())
+            }
+            hidapi::HidError::IncompleteSendError { sent, all } => {
+                DurgodError::CommunicationError(format!("Incomplete send: {} of {} bytes", sent, all))
+            }
+            hidapi::HidError::SetBlockingModeError { mode } => {
+                DurgodError::CommunicationError(format!("Failed to set blocking mode: {}", mode))
+            }
+            hidapi::HidError::OpenHidDeviceWithDeviceInfoError { device_info } => {
+                DurgodError::DeviceNotFound(format!("Failed to open device: {:?}", device_info))
+            }
+            hidapi::HidError::IoError { error } => {
+                DurgodError::CommunicationError(format!("I/O error: {}", error))
             }
         }
     }

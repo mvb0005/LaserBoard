@@ -1,6 +1,6 @@
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use hidapi::HidApi;
-use log::{debug, info, warn, error};
+use log::{debug, info};
 use std::time::Duration;
 
 pub mod errors;

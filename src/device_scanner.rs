@@ -1,5 +1,5 @@
 use hidapi::{HidApi, DeviceInfo as HidDeviceInfo};
-use log::{debug, info, warn};
+use log::{debug, info};
 use crate::{DeviceInfo, DurgodError};
 use anyhow::Result;
 
@@ -19,7 +19,7 @@ impl DeviceScanner {
     pub fn scan_all_devices(&self) -> Result<Vec<ScannedDevice>> {
         info!("Scanning for all HID devices...");
         
-        let devices = self.api.device_list()
+        let devices: Vec<ScannedDevice> = self.api.device_list()
             .map(|device_info| ScannedDevice::from_hid_device_info(device_info))
             .collect();
         
@@ -74,13 +74,11 @@ impl DeviceScanner {
         let devices: Vec<ScannedDevice> = self.api.device_list()
             .filter(|device| {
                 let manufacturer = device.manufacturer_string()
-                    .unwrap_or_else(|| Some("".to_string()))
-                    .unwrap_or_else(|| "".to_string())
+                    .unwrap_or("")
                     .to_lowercase();
                 
                 let product = device.product_string()
-                    .unwrap_or_else(|| Some("".to_string()))
-                    .unwrap_or_else(|| "".to_string())
+                    .unwrap_or("")
                     .to_lowercase();
                 
                 manufacturer.contains(&search_lower) || product.contains(&search_lower)
@@ -136,13 +134,11 @@ impl DeviceScanner {
         
         // For now, we'll be more permissive and include devices that might be keyboards
         let manufacturer = device.manufacturer_string()
-            .unwrap_or_else(|| Some("".to_string()))
-            .unwrap_or_else(|| "".to_string())
+            .unwrap_or("")
             .to_lowercase();
         
         let product = device.product_string()
-            .unwrap_or_else(|| Some("".to_string()))
-            .unwrap_or_else(|| "".to_string())
+            .unwrap_or("")
             .to_lowercase();
         
         // Check for keyboard-related terms
@@ -160,15 +156,15 @@ impl DeviceScanner {
         };
         
         let manufacturer = device.get_manufacturer_string()
-            .unwrap_or_else(|_| Some("Unknown".to_string()))
+            .unwrap_or(Some("Unknown".to_string()))
             .unwrap_or_else(|| "Unknown".to_string());
         
         let product = device.get_product_string()
-            .unwrap_or_else(|_| Some("Unknown".to_string()))
+            .unwrap_or(Some("Unknown".to_string()))
             .unwrap_or_else(|| "Unknown".to_string());
         
         let serial = device.get_serial_number_string()
-            .unwrap_or_else(|_| Some("Unknown".to_string()))
+            .unwrap_or(Some("Unknown".to_string()))
             .unwrap_or_else(|| "Unknown".to_string());
         
         Ok(Some(DetailedDeviceInfo {
@@ -203,9 +199,9 @@ impl ScannedDevice {
         Self {
             vendor_id: info.vendor_id(),
             product_id: info.product_id(),
-            manufacturer: info.manufacturer_string().unwrap_or(None),
-            product: info.product_string().unwrap_or(None),
-            serial_number: info.serial_number().unwrap_or(None),
+            manufacturer: info.manufacturer_string().map(|s| s.to_string()),
+            product: info.product_string().map(|s| s.to_string()),
+            serial_number: info.serial_number().map(|s| s.to_string()),
             interface_number: info.interface_number(),
             usage_page: info.usage_page(),
             usage: info.usage(),
