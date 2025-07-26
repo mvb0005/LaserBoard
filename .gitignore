@@ -1,0 +1,113 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+logs/
+
+# USB packet capture files (can be large)
+captures/*.pcap
+captures/*.pcapng
+captures/*.log
+
+# Analysis output files
+docs/analysis_*/
+docs/device_info.txt
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation build artifacts
+docs/_build/
+docs/build/
+
+# Test artifacts
+test_output/
+test_results/
+
+# Binary files (if any are generated)
+*.bin
+*.hex
+
+# USB device files (for security)
+/dev/hidraw*
+/dev/usb*
+
+# Kernel module files
+*.ko
+
+# udev rules (may contain sensitive device info)
+/etc/udev/rules.d/99-hid-permissions.rules
+
+# Wireshark personal config
+.wireshark/
+
+# System-specific USB monitoring files
+/sys/kernel/debug/usb/
+/proc/bus/usb/
+
+# Temporary analysis files
+*.analysis.txt
+*.report.txt
+*.timeline.txt
+*.patterns.txt
+*.keycodes.txt
+*.modifiers.txt
+
+# Backup files
+*.orig
+*.rej
+
+# Archive files
+*.tar.gz
+*.zip
+*.rar
+
+# Compiled binaries (if any)
+durgod-controller
+scan-devices
+capture-keys
+send-key
+
+# Rust profiling and debugging
+*.prof
+*.pdb
+*.dSYM/
+
+# Coverage reports
+*.profraw
+coverage/
+*.gcov
+
+# Documentation site builds
+site/
+public/
+
+# Local configuration
+config.local.toml
+settings.local.json 

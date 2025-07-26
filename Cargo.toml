@@ -1,0 +1,67 @@
+[package]
+name = "durgod-k320-controller"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "A Rust application to programmatically control the Durgod K320 keyboard via USB HID protocol"
+license = "MIT"
+repository = "https://github.com/your-username/durgod-k320-controller"
+keywords = ["keyboard", "hid", "usb", "durgod", "automation"]
+categories = ["hardware-support", "command-line-utilities"]
+
+[dependencies]
+# HID (Human Interface Device) communication
+hidapi = "2.6"
+
+# USB low-level communication (alternative to hidapi)
+rusb = "0.9"
+
+# Command line interface
+clap = { version = "4.4", features = ["derive"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+log = "0.4"
+env_logger = "0.10"
+
+# Serialization for configuration
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# Cross-platform input handling (optional for now)
+# rdev = "0.10"
+
+# Hex encoding/decoding for packet analysis
+hex = "0.4"
+
+# Time utilities
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+# Testing utilities
+tokio = { version = "1.0", features = ["rt", "macros"] }
+
+[features]
+default = ["hidapi-backend"]
+hidapi-backend = []
+rusb-backend = []
+
+[[bin]]
+name = "durgod-controller"
+path = "src/main.rs"
+
+[[bin]]
+name = "scan-devices"
+path = "src/bin/scan_devices.rs"
+
+[[bin]]
+name = "capture-keys"
+path = "src/bin/capture_keys.rs"
+
+[[bin]]
+name = "send-key"
+path = "src/bin/send_key.rs" 
