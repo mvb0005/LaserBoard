@@ -56,12 +56,4 @@ path = "src/main.rs"
 
 [[bin]]
 name = "scan-devices"
-path = "src/bin/scan_devices.rs"
-
-[[bin]]
-name = "capture-keys"
-path = "src/bin/capture_keys.rs"
-
-[[bin]]
-name = "send-key"
-path = "src/bin/send_key.rs" 
+path = "src/bin/scan_devices.rs" 
